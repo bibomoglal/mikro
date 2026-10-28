@@ -388,6 +388,7 @@ body.isrt #bnav{display:none}
 .rt-art{left:auto;right:14px}
 .rt-hx{right:auto;left:0;padding:0 6px 0 18px}
 .rt-hx{width:calc(100% - 150px);padding:0 4px 0 16px}.rt-hx b{white-space:normal;font-size:15px}
+#toast{position:fixed;left:10px;right:10px;bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:60}
 </style>
 </head>
 <body>
@@ -401,8 +402,8 @@ body.isrt #bnav{display:none}
 
 <div id="stage">
 <main id="pv"><div id="shw"><div id="sheetbox"></div></div></main>
-<div id="toast"><span id="msg"></span><button id="shr" hidden>Share</button></div>
 </div>
+<div id="toast"><span id="msg"></span><button id="shr" hidden>Share</button></div>
 
 <section id="sheet">
 <div class="sh"><div class="rt-ic" id="sh_ic"></div><div class="rt-ht"><b id="sht"></b><span id="shs"></span></div><span class="pill no" id="sh_pill">Disconnected</span><button class="ib" id="xs" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button></div>
@@ -1119,6 +1120,7 @@ $('m_prof').onchange=function(){mDisarm();$('m_cmt').value='';MSHOW=60;mRender()
 $('m_more').onclick=function(){MSHOW+=60;mRender()};
 function mExport(l,pf){
  if(!l.length){$('m_msg').textContent='No cards to export.';return}
+ if(!pf)pf=l[0].profile||'';
  if(pf){var pr=pget().filter(function(p){return p.v&&p.v.r_prof===pf})[0];if(pr)['d1','d2','d3'].forEach(function(i){var el=$(i);el.value=pr.v[i];el.dispatchEvent(new Event('input',{bubbles:true}))})}
  $('codes').value=l.map(function(x){return x.name}).join('\n');render();
  $('pr').click()}
