@@ -1,0 +1,7 @@
+{
+  "appId": "io.github.bibomoglal.brightstar",
+  "appName": "Bright Star",
+  "webDir": "www",
+  "server": { "androidScheme": "http", "cleartext": true },
+  "plugins": { "CapacitorHttp": { "enabled": true } }
+}
