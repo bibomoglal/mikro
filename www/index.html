@@ -65,16 +65,22 @@ button{width:100%;padding:13px;border:0;border-radius:10px;background:var(--ac);
 .page{background:#fff;position:relative;overflow:hidden;direction:ltr;box-shadow:0 1px 6px rgba(0,0,0,.35)}
 .page+.page{margin-top:10px}
 .grid{display:grid;align-content:start}
-.vc{border:.25mm solid var(--c);border-radius:.8mm;display:flex;flex-direction:column;overflow:hidden;background:#fff;color:#000;font-family:Arial,sans-serif}
-.vh{background:var(--c);color:#fff;text-align:center;font-weight:bold;height:22%;display:flex;align-items:center;justify-content:center;white-space:nowrap;font-size:var(--hf)}
+.vc{border:.3mm solid var(--c);border-radius:1.6mm;display:flex;flex-direction:column;overflow:hidden;position:relative;background:linear-gradient(135deg,#fbfdff,#e6f0fc);color:#000;font-family:Arial,sans-serif}
+.vc::before{content:"";position:absolute;left:0;right:0;top:22%;bottom:25%;background:var(--logo) center/contain no-repeat;opacity:.3}
+.vc>*{position:relative}
+.vh{background:linear-gradient(90deg,rgba(0,0,0,.24),rgba(255,255,255,.10)),var(--c);color:#fff;text-align:center;font-weight:bold;height:22%;box-sizing:border-box;border-bottom:.45mm solid #5ac8ff;display:flex;align-items:center;justify-content:center;white-space:nowrap;font-size:var(--hf);text-shadow:.15mm .3mm 0 rgba(0,0,0,.28)}
 .vm{flex:1;display:flex;flex-direction:var(--dir);align-items:center;justify-content:center;gap:var(--gp);min-height:0}
 .vk{text-align:center;width:var(--bw)}
-.vk small{display:block;font-size:var(--lf);color:#555;white-space:nowrap}
-.vk b{display:block;border:.25mm dashed var(--c);background:#f2f9fd;height:var(--bh);line-height:var(--bh);font-size:var(--cf);letter-spacing:.04em;white-space:nowrap;overflow:hidden}
-.vq svg{display:block;width:var(--qs);height:var(--qs)}
+.vk small{display:block;font-size:var(--lf);color:#3c5578;white-space:nowrap}
+.vk b{display:block;position:relative;border:.25mm solid var(--c);background:rgba(255,255,255,.6);border-radius:1.4mm;height:var(--bh);line-height:var(--bh);font-size:var(--cf);letter-spacing:.04em;white-space:nowrap;overflow:hidden;color:#081830}
+.vk b::after{content:"";position:absolute;left:.5mm;right:.5mm;top:.5mm;bottom:.5mm;border:.2mm dashed var(--c);border-radius:1mm;opacity:.85;pointer-events:none}
+.vq{position:relative}
+.vq svg{display:block;width:var(--qs);height:var(--qs);background:#fff;padding:.7mm;border-radius:1.2mm;border:.3mm solid var(--c)}
+.vq small{position:absolute;left:0;right:0;top:100%;margin-top:.7mm;text-align:center;font-size:calc(var(--qs)*.115);letter-spacing:.1em;color:#3c5578;white-space:nowrap}
 .cu svg{display:block;width:100%;height:auto}
-.vi{background:#eaf5fb;border-top:.2mm solid var(--c);font-weight:bold;height:15%;display:flex;align-items:center;justify-content:center;white-space:nowrap;font-size:var(--if)}
-.vl{font-weight:bold;height:10%;display:flex;align-items:center;justify-content:center;white-space:nowrap;font-size:var(--lf2);color:#333}
+.vi{height:15%;display:flex;align-items:center;justify-content:center;white-space:nowrap;font-size:var(--if)}
+.vi span{display:flex;align-items:center;justify-content:center;width:var(--pw);height:62%;background:linear-gradient(90deg,rgba(0,0,0,.24),rgba(255,255,255,.10)),var(--c);color:#fff;font-weight:bold;border-radius:1.4mm}
+.vl{background:linear-gradient(90deg,rgba(0,0,0,.24),rgba(255,255,255,.10)),var(--c);color:#fff;font-weight:bold;height:10%;display:flex;align-items:center;justify-content:center;white-space:nowrap;font-size:var(--lf2)}
 .u3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .uf{display:flex;align-items:center;direction:ltr;border:1px solid var(--bd);border-radius:8px;background:var(--bg);padding-right:9px;overflow:hidden}
 .uf input{border:0;border-radius:0;background:transparent;min-width:0;text-align:center;padding:9px 4px}
@@ -546,7 +552,7 @@ body.isrt #bnav{display:none}
 <div class="rt-ch"><div class="rt-ic2"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h6M7 14h4M16 14h.01"/></svg></div><div class="t"><b>Card details</b><span>Name, color and login address</span></div></div>
 <div class="g">
 <div><label>Name</label><input id="name" value="Bright Star"></div>
-<div><label>Color</label><input id="col" type="color" value="#4aa3d6"></div>
+<div><label>Color</label><input id="col" type="color" value="#1e6edc"></div>
 </div>
 <input id="inf" type="hidden" value="7d 5 GiB 20.00 L.E">
 <div class="info">Leave any field empty if you do not want it on the card..</div>
@@ -576,7 +582,7 @@ body.isrt #bnav{display:none}
 <div style="margin-top:2mm;font-size:1.4em;font-weight:bold">{{username}}</div>
 <div style="width:18mm;margin:2mm auto">{{qr}}</div>
 <div style="font-weight:bold">{{info}}</div></div></textarea>
-<div class="info">Variables:: {{username}} {{password}} {{qr}} {{name}} {{info}} {{host}} {{label}} {{color}} {{url}} {{cw}} {{ch}} (card size in mm). Use mm or % for sizes. The QR takes the width of its container..</div></div>
+<div class="info">Variables: {{username}} {{password}} {{qr}} {{name}} {{info}} {{host}} {{label}} {{color}} {{url}} {{cw}} {{ch}} (card size in mm). Use mm or % for sizes. The QR takes the width of its container.</div></div>
 </div>
 </div>
 
@@ -587,7 +593,7 @@ body.isrt #bnav{display:none}
 <div><label>Paper</label><select id="paper"><option value="210,297">A4</option><option value="215.9,279.4">Letter</option></select></div>
 <div><label>Page margin (mm)</label><input id="mar" type="number" value="1" step="0.5" min="0"></div>
 <div><label>Columns</label><input id="cols" type="number" value="4" min="1" max="8"></div>
-<div><label>Rows</label><input id="rows" type="number" value="7" min="1" max="14"></div>
+<div><label>Rows</label><input id="rows" type="number" value="8" min="1" max="14"></div>
 <div><label>Gap between cards (mm)</label><input id="gap" type="number" value="2" step="0.5" min="0"></div>
 </div>
 <div class="chk"><input type="checkbox" id="trim"><span>Trim the empty space below the last page in the PDF file too</span></div>
@@ -698,7 +704,7 @@ function pgH(p){var wh=$('paper').value.split(',').map(Number),W=wh[0],H=wh[1],m
 var st=document.createElement('style');document.head.appendChild(st);
 function syncInf(){var a=($('d1').value||'').trim(),b=($('d2').value||'').trim(),c=($('d3').value||'').trim(),t=[];
  if(a)t.push(a+'d');if(b)t.push(b+' GiB');if(c){var n=Number(c);t.push((isFinite(n)?n.toFixed(2):c)+' L.E')}
- $('inf').value=t.join(' ')}
+ $('inf').value=t.join(' • ')}
 function render(){syncInf();
  var wh=$('paper').value.split(',').map(Number),W=wh[0],H=wh[1];
  var m=+$('mar').value||0,c=Math.max(1,+$('cols').value||1),r=Math.max(1,+$('rows').value||1),g=+$('gap').value||0;
@@ -707,13 +713,13 @@ function render(){syncInf();
  $('cnt').textContent=sample?'Demo preview — add codes':list.length+' card · '+pages+' pg';
  $('m_img').style.display=$('mode').value=='img'?'block':'none';$('m_html').style.display=$('mode').value=='html'?'block':'none';$('sz').textContent='Card size: '+cw.toFixed(1)+' × '+ch.toFixed(1)+' mm';
  st.textContent='@page{size:'+W+'mm '+H+'mm;margin:0}'+(FB&&$('mode').value=='def'?($('fon').value=='all'?'.vh,.vk b,.vk small,.vi,.vl{':'.vh{')+'font-family:UserFont,Arial,sans-serif;font-weight:normal}':'');
- var sq=$('qr').checked,mh=ch*.53,side=!sq||cw>=mh*1.5,qs=side?Math.min(cw*.31,mh*.74):Math.min(cw*.8,mh*.5),gpv=side?cw*.04:mh*.04,bw=side?(sq?Math.min(cw*.5,cw*.93-gpv-qs):cw*.86):cw*.9,bh=side?mh*.38:Math.min(mh*.2,cw*.25),vars='--dir:'+(side?'row':'column')+';--hf:'+Math.min(ch*.17,cw*.115)+'mm;--bw:'+bw+'mm;--gp:'+gpv+'mm;--lf:'+Math.min(side?mh*.12:mh*.07,cw*.06)+'mm;--bh:'+bh+'mm;--cf:'+Math.min(bh*.6,bw*.18)+'mm;--qs:'+qs+'mm;--if:'+Math.min(ch*.075,cw*.08)+'mm;--lf2:'+Math.min(ch*.055,cw*.055)+'mm;',col=$('col').value,host=$('host').value,html='';
+ var sq=$('qr').checked,mh=ch*.53,side=!sq||cw>=mh*1.5,qs=side?Math.min(cw*.31,mh*.74):Math.min(cw*.8,mh*.5),gpv=side?cw*.04:mh*.04,bw=side?(sq?Math.min(cw*.5,cw*.93-gpv-qs):cw*.86):cw*.9,bh=side?mh*.38:Math.min(mh*.2,cw*.25),vars='--dir:'+(side?'row':'column')+';--hf:'+Math.min(ch*.17,cw*.115)+'mm;--bw:'+bw+'mm;--gp:'+gpv+'mm;--lf:'+Math.min(side?mh*.12:mh*.07,cw*.06)+'mm;--bh:'+bh+'mm;--cf:'+Math.min(bh*.6,bw*.18)+'mm;--qs:'+qs+'mm;--if:'+Math.min(ch*.075,cw*.08)+'mm;--lf2:'+Math.min(ch*.055,cw*.055)+'mm;--pw:'+(side?bw+gpv+(sq?qs:0):Math.max(bw,sq?qs:0))+'mm;',col=$('col').value,host=$('host').value,html='';
  var bhP=side?mh*.25:Math.min(mh*.13,cw*.17),varsP=vars.replace('--bh:'+bh+'mm','--bh:'+bhP+'mm').replace(/--cf:[^;]+;/,'--cf:'+Math.min(bhP*.6,bw*.18)+'mm;').replace(/--lf:[^;]+;/,'--lf:'+Math.min(side?mh*.09:mh*.055,cw*.06)+'mm;');
  for(var p=0;p<pages;p++){
   html+='<div class="page" style="width:'+W+'mm;height:'+(p==pages-1?lastH:H)+'mm;padding:'+m+'mm"><div class="grid" style="grid-template-columns:repeat('+c+','+cw+'mm);grid-auto-rows:'+ch+'mm;gap:'+g+'mm">';
   list.slice(p*per,(p+1)*per).forEach(function(x){
    var url=qrUrl(host,x),pwm=hasPw(x);if($('mode').value!='def'){html+=custom(x,url,cw,ch);return}
-   html+='<div class="vc" style="--c:'+col+';'+(pwm?varsP:vars)+'"><div class="vh"><span style="font-size:.75em;margin-right:.15em">&#9733;</span>'+esc($('name').value)+'<span style="font-size:.75em;margin-left:.15em">&#9733;</span></div><div class="vm"><div class="vk">'+(pwm?'<small>Username</small><b>'+esc(x[0])+'</b><small>Password</small><b>'+esc(x[1])+'</b>':'<small>'+esc($('lbl').value)+'</small><b>'+esc(x[0])+'</b>')+'</div>'+($('qr').checked?'<div class="vq">'+qrsvg(url)+'</div>':'')+'</div><div class="vi">'+esc($('inf').value)+'</div><div class="vl">Login: http://'+esc(host)+'</div></div>';
+   html+='<div class="vc" style="--c:'+col+';'+(pwm?varsP:vars)+'"><div class="vh"><span style="font-size:.75em;margin-right:.15em">&#9733;</span>'+esc($('name').value)+'<span style="font-size:.75em;margin-left:.15em">&#9733;</span></div><div class="vm"><div class="vk">'+(pwm?'<small>Username</small><b>'+esc(x[0])+'</b><small>Password</small><b>'+esc(x[1])+'</b>':'<small>'+esc($('lbl').value)+'</small><b>'+esc(x[0])+'</b>')+'</div>'+($('qr').checked?'<div class="vq">'+qrsvg(url)+(side?'<small>Scan to login</small>':'')+'</div>':'')+'</div><div class="vi"><span>'+esc($('inf').value)+'</span></div><div class="vl">Login: http://'+esc(host)+'</div></div>';
   });
   html+='</div></div>';
  }
@@ -786,6 +792,8 @@ $('csvx').onclick=function(){var l=parse();if(!l.length){$('msg').textContent='N
 
 window.addEventListener('resize',fit);
 function hex(h){h=h.replace('#','');return[0,2,4].map(function(i){return parseInt(h.substr(i,2),16)})}
+var WMD=null,WMW=256,WMH=228;
+(function(){try{var m=/url\(["']?([^"')]+)["']?\)/.exec(getComputedStyle(document.documentElement).getPropertyValue('--logo'));if(!m)return;var im=new Image();im.onload=function(){try{var cv=document.createElement('canvas');cv.width=WMW=im.naturalWidth;cv.height=WMH=im.naturalHeight;cv.getContext('2d').drawImage(im,0,0);WMD=cv.toDataURL('image/png')}catch(e){WMD=m[1]}};im.src=m[1]}catch(e){}})();
 function makePdf(){
  var wh=$('paper').value.split(',').map(Number),W=wh[0],H=wh[1];
  var m=+$('mar').value||0,c=Math.max(1,+$('cols').value||1),r=Math.max(1,+$('rows').value||1),g=+$('gap').value||0;
@@ -801,62 +809,82 @@ function makePdf(){
   if(i>0&&i%per===0)doc.addPage([W,pgH(Math.floor(i/per))],ori(W,pgH(Math.floor(i/per))));
   var idx=i%per,cx0=m+(idx%c)*(cw+g),cy0=m+Math.floor(idx/c)*(ch+g);if($('mode').value=='img'){imgCard(doc,x,cx0,cy0,cw,ch,rgb);return}
   var hh=ch*.22,ih=ch*.15,lh=ch*.1,my=cy0+hh,mh=ch-hh-ih-lh;
-  doc.setFillColor(rgb[0],rgb[1],rgb[2]);doc.rect(cx0,cy0,cw,hh,'F');
-  doc.setFont(UF?'UserFont':'helvetica',UF?'normal':'bold');doc.setTextColor(255,255,255);
-  doc.setFillColor(255,255,255);ft($('name').value,cx0+cw/2,cy0+hh/2,cw*.76,hh*.8);
-  var nw=doc.getTextWidth($('name').value),sr=Math.min(hh*.3,cw*.042);star(cx0+cw/2-nw/2-sr*1.4,cy0+hh/2,sr);star(cx0+cw/2+nw/2+sr*1.4,cy0+hh/2,sr);
-  var iy=cy0+ch-ih-lh;
-  doc.setFillColor(234,245,251);doc.rect(cx0,iy,cw,ih,'F');
-  doc.setDrawColor(rgb[0],rgb[1],rgb[2]);doc.setLineWidth(.2);doc.line(cx0,iy,cx0+cw,iy);
-  sf(1);doc.setTextColor(0,0,0);ft($('inf').value,cx0+cw/2,iy+ih/2,cw*.94,ih*.55);
-  doc.setTextColor(51,51,51);ft('Login: http://'+host,cx0+cw/2,iy+ih+lh/2,cw*.94,lh*.6);
+  function GS(o){try{doc.setGState(new doc.GState({opacity:o}))}catch(e){}}
+  function grad(X,Y,Wd,Ht){var N=24,i,t,al,o,k,cc=[];for(i=0;i<N;i++){t=(i+.5)/N;al=.24-.14*t;o=25.5*t/al;for(k=0;k<3;k++)cc[k]=Math.round(rgb[k]*(1-al)+o*al);doc.setFillColor(cc[0],cc[1],cc[2]);doc.rect(X+Wd*i/N,Y,Wd/N+.05,Ht,'F')}}
   var pwm=hasPw(x),side=!showQr||cw>=mh*1.5,qs=!showQr?0:(side?Math.min(cw*.31,mh*.74):Math.min(cw*.8,mh*.5)),gp=!showQr?0:(side?cw*.04:mh*.04),bw=side?(showQr?Math.min(cw*.5,cw*.93-gp-qs):cw*.86):cw*.9,
-  bh=pwm?(side?mh*.25:Math.min(mh*.13,cw*.17)):(side?mh*.38:Math.min(mh*.2,cw*.25)),lb=pwm?(side?mh*.09:mh*.055):(side?mh*.12:mh*.07),gap2=pwm?lb*1.5:0,fh=pwm?bh*2+gap2:bh,bx,by,qx,qy;
+  bh=pwm?(side?mh*.25:Math.min(mh*.13,cw*.17)):(side?mh*.38:Math.min(mh*.2,cw*.25)),lb=pwm?(side?mh*.09:mh*.055):(side?mh*.12:mh*.07),gap2=pwm?lb*1.5:0,fh=pwm?bh*2+gap2:bh,bx,by,qx,qy,pw=side?bw+gp+qs:Math.max(bw,qs);
+  // body background
+  var BN=14,bi;for(bi=0;bi<BN;bi++){var bt=(bi+.5)/BN;doc.setFillColor(Math.round(250-17*bt),Math.round(252-10*bt),Math.round(254-2*bt));doc.rect(cx0,my+(ch-hh-lh)*bi/BN,cw,(ch-hh-lh)/BN+.05,'F')}
+  // header
+  grad(cx0,cy0,cw,hh);doc.setFillColor(90,200,255);doc.rect(cx0,cy0+hh-.45,cw,.45,'F');
+  // watermark: from under the header down to the info bar, centred
+  if(WMD){var wh2=mh,ww2=wh2*WMW/WMH;if(ww2>cw){ww2=cw;wh2=ww2*WMH/WMW}GS(.3);try{doc.addImage(WMD,'PNG',cx0+(cw-ww2)/2,my+(mh-wh2)/2,ww2,wh2,'wm','FAST')}catch(e){}GS(1)}
+  doc.setFont(UF?'UserFont':'helvetica',UF?'normal':'bold');
+  doc.setFillColor(255,255,255);
+  var nw0,sr=Math.min(hh*.3,cw*.042);
+  doc.setTextColor(0,0,0);GS(.28);ft($('name').value,cx0+cw/2+.15,cy0+hh/2+.25,cw*.76,hh*.8);GS(1);
+  doc.setTextColor(255,255,255);ft($('name').value,cx0+cw/2,cy0+hh/2,cw*.76,hh*.8);
+  nw0=doc.getTextWidth($('name').value);star(cx0+cw/2-nw0/2-sr*1.4,cy0+hh/2,sr);star(cx0+cw/2+nw0/2+sr*1.4,cy0+hh/2,sr);
+  // info pill + footer
+  var iy=cy0+ch-ih-lh;
+  doc.setFillColor(rgb[0],rgb[1],rgb[2]);doc.roundedRect(cx0+(cw-pw)/2,iy+ih*.2,pw,ih*.6,1.4,1.4,'F');
+  sf(1);doc.setTextColor(255,255,255);ft($('inf').value,cx0+cw/2,iy+ih/2,pw*.94,ih*.6*.6);
+  grad(cx0,iy+ih,cw,lh);
+  doc.setTextColor(255,255,255);ft('Login: http://'+host,cx0+cw/2,iy+ih+lh/2,cw*.94,lh*.6);
   if(side){bx=cx0+(cw-bw-gp-qs)/2;by=pwm?my+mh/2-fh/2+lb/2:my+mh/2-bh/2+mh*.07;qx=bx+bw+gp;qy=my+(mh-qs)/2}
   else{var tot=lb+fh+gp+qs,t0=my+(mh-tot)/2;by=t0+lb;bx=cx0+(cw-bw)/2;qx=cx0+(cw-qs)/2;qy=by+fh+gp}
-  function fld(lab,val,y){doc.setTextColor(85,85,85);sf(0);ft(lab,bx+bw/2,y-lb*.7,bw,lb);doc.setFillColor(242,249,253);doc.setLineWidth(.25);doc.setLineDashPattern([.7,.7],0);doc.rect(bx,y,bw,bh,'FD');doc.setLineDashPattern([],0);sf(1);doc.setTextColor(0,0,0);ft(val,bx+bw/2,y+bh/2,bw*.92,bh*.62)}
+  function fld(lab,val,y){doc.setTextColor(60,85,120);sf(0);ft(lab,bx+bw/2,y-lb*.7,bw,lb);
+   GS(.6);doc.setFillColor(255,255,255);doc.roundedRect(bx,y,bw,bh,1.4,1.4,'F');GS(1);
+   doc.setDrawColor(rgb[0],rgb[1],rgb[2]);doc.setLineWidth(.25);doc.roundedRect(bx,y,bw,bh,1.4,1.4,'S');
+   doc.setLineWidth(.2);doc.setLineDashPattern([.7,.5],0);doc.roundedRect(bx+.5,y+.5,bw-1,bh-1,1,1,'S');doc.setLineDashPattern([],0);
+   sf(1);doc.setTextColor(8,24,48);ft(val,bx+bw/2,y+bh/2,bw*.92,bh*.62)}
   if(pwm){fld('Username',x[0],by);fld('Password',x[1],by+bh+gap2)}else fld($('lbl').value,x[0],by);
   if(showQr){
    try{var q=qrcode(0,'M');q.addData(qrUrl(host,x));q.make();
-   var n=q.getModuleCount(),cell=qs/n;
+   var n=q.getModuleCount(),cell=qs/n,pad=.7;
+   doc.setFillColor(255,255,255);doc.setDrawColor(rgb[0],rgb[1],rgb[2]);doc.setLineWidth(.3);doc.roundedRect(qx-pad,qy-pad,qs+2*pad,qs+2*pad,1.2,1.2,'FD');
    doc.setFillColor(0,0,0);
    for(var a=0;a<n;a++)for(var b=0;b<n;b++)if(q.isDark(a,b))doc.rect(qx+b*cell,qy+a*cell,cell+.03,cell+.03,'F');
+   if(side){doc.setTextColor(60,85,120);sf(0);ft('Scan to login',qx+qs/2,qy+qs+2.4,qs+2*pad,qs*.13)}
    }catch(e){}
   }
-  doc.setDrawColor(rgb[0],rgb[1],rgb[2]);doc.setLineWidth(.3);doc.roundedRect(cx0,cy0,cw,ch,.8,.8,'S');
+  doc.setDrawColor(rgb[0],rgb[1],rgb[2]);doc.setLineWidth(.3);doc.roundedRect(cx0,cy0,cw,ch,1.6,1.6,'S');
  });
  return doc.output('blob');
 }
-var LB=null;
+var LB=null,LN='';
 function isNative(){return !!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform())}
 function blobB64(b){return new Promise(function(res,rej){var r=new FileReader();r.onload=function(){res(String(r.result).split(',')[1])};r.onerror=rej;r.readAsDataURL(b)})}
-async function saveFile(blob,name){
+async function saveFile(blob,name,exact){
  var P=window.Capacitor&&Capacitor.Plugins;
  if(isNative()&&P&&P.Filesystem){
   var d64=await blobB64(blob);
   try{
    var D=Capacitor.registerPlugin?Capacitor.registerPlugin('Downloader'):P.Downloader;
-   var ts=new Date().toISOString().slice(0,16).replace(/[-:T]/g,''),nm=name.replace(/(\.[a-z0-9]+)$/i,'-'+ts+'$1');
+   var ts=new Date().toISOString().slice(0,16).replace(/[-:T]/g,''),nm=exact?name:name.replace(/(\.[a-z0-9]+)$/i,'-'+ts+'$1');
    await D.save({name:nm,data:d64,mime:/\.csv$/i.test(name)?'text/csv':'application/pdf'});return 'downloads'}catch(e0){}
   try{await P.Filesystem.writeFile({path:'BrightStar/'+name,data:d64,directory:'DOCUMENTS',recursive:true});return 'docs'}catch(e){}
   var w=await P.Filesystem.writeFile({path:name,data:d64,directory:'CACHE'});
   if(P.Share){try{await P.Share.share({title:name,url:w.uri,dialogTitle:'Save or print the file'})}catch(e){}}
   return 'share'}
  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},60000)}
-function dlBlob(blob){return saveFile(blob,'bright-star-cards.pdf')}
+var PRN='';
+function pdfName(){var d=new Date(),p=function(n){return(n<10?'0':'')+n},pf=String(PRN||$('r_prof').value||'').replace(/[\\\/:*?"<>|\r\n]+/g,'_').trim();
+ return 'Bright Star '+(pf?pf+' ':'')+d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'.pdf'}
+function dlBlob(blob,name){return saveFile(blob,name||'bright-star-cards.pdf',true)}
 $('pr').onclick=async function(){
- var msg=$('msg');$('shr').hidden=true;
+ var msg=$('msg');$('shr').hidden=true;var FN=pdfName();PRN='';
  if(!window.jspdf){msg.textContent='The library PDF did not load. Open the app once while online and refresh the page.';return}
  if(!parse().length){msg.textContent='Add codes first.';return}
- if(/[^\x00-\xff]/.test(($('mode').value=='def'?$('name').value+$('inf').value+$('lbl').value+$('host').value:''))){msg.textContent='The PDF supports only English letters and numbers in these texts. Remove Arabic letters.';return}
+ if(/[^\x00-\xff\u2022]/.test(($('mode').value=='def'?$('name').value+$('inf').value+$('lbl').value+$('host').value:''))){msg.textContent='The PDF supports only English letters and numbers in these texts. Remove Arabic letters.';return}
  msg.textContent='Preparing...';
  try{
-  var blob=$('mode').value=='html'?await pdfHtml():makePdf();LB=blob;var where=await dlBlob(blob);
+  var blob=$('mode').value=='html'?await pdfHtml():makePdf();LB=blob;LN=FN;var where=await dlBlob(blob,FN);
   msg.textContent=(where==='downloads'?'Saved in Downloads/BrightStar. ':where==='docs'?'Saved in Documents/BrightStar. ':'')+'File is ready. Open it and print at Scale 100%.';
-  try{var f=new File([blob],'bright-star-cards.pdf',{type:'application/pdf'});if(!isNative()&&navigator.canShare&&navigator.canShare({files:[f]}))$('shr').hidden=false}catch(e){}
+  try{var f=new File([blob],FN,{type:'application/pdf'});if(!isNative()&&navigator.canShare&&navigator.canShare({files:[f]}))$('shr').hidden=false}catch(e){}
  }catch(e){msg.textContent='Problem while saving: '+((e&&e.message)||e)}
 };
-$('shr').onclick=function(){if(!LB)return;var f=new File([LB],'bright-star-cards.pdf',{type:'application/pdf'});navigator.share({files:[f],title:'Bright Star'}).catch(function(){})};
+$('shr').onclick=function(){if(!LB)return;var f=new File([LB],LN||'bright-star-cards.pdf',{type:'application/pdf'});navigator.share({files:[f],title:'Bright Star'}).catch(function(){})};
 (function(){
  var tm=null,tb=$('toast'),ms=$('msg');
  new MutationObserver(function(){
@@ -1123,7 +1151,7 @@ function mExport(l,pf){
  if(!pf)pf=l[0].profile||'';
  if(pf){var pr=pget().filter(function(p){return p.v&&p.v.r_prof===pf})[0];if(pr)['d1','d2','d3'].forEach(function(i){var el=$(i);el.value=pr.v[i];el.dispatchEvent(new Event('input',{bubbles:true}))})}
  $('codes').value=l.map(function(x){return x.name}).join('\n');render();
- $('pr').click()}
+ PRN=pf||'';$('pr').click()}
 $('m_pdf').onclick=function(){mExport(mFiltered(),$('m_prof').value)};
 var PFM={m_rl:'rate-limit',m_su:'shared-users',m_st:'session-timeout',m_it:'idle-timeout',m_kt:'keepalive-timeout'};
 function mPfCur(){var n=$('m_pp').value;return MP.filter(function(p){return p.name===n})[0]}
