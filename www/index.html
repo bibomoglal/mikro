@@ -637,7 +637,17 @@ function load(){try{var o=JSON.parse(localStorage.getItem('bs_cards')||'null');i
 function esc(s){return s.replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function qrsvg(t){try{var q=qrcode(0,'M');q.addData(t);q.make();return q.createSvgTag({cellSize:4,margin:0,scalable:true})}catch(e){return ''}}
 function parse(){return $('codes').value.split(/\r?\n/).map(function(l){return l.trim()}).filter(Boolean).map(function(l){var p=l.split(/[,\s;\t]+/);return[p[0],p[0]]})}
-var FB='';
+var FB='',INFOMAP={};
+function INFO(x){return INFOMAP[x[0]]||$('inf').value}
+function normN(s){return String(s||'').toLowerCase().replace(/[^a-z0-9\u0600-\u06ff]+/g,'')}
+function stDays(v){if(!v)return 0;var m,d=0,w=/(\d+)w/.exec(v),dd=/(\d+)d/.exec(v),t=/(\d+):(\d+):(\d+)/.exec(v);if(w)d+=w[1]*7;if(dd)d+=+dd[1];if(t)d+=(+t[1]+t[2]/60+t[3]/3600)/24;return Math.round(d*100)/100}
+function planInfo(prof,bytes){
+ var a=pget(),n=normN(prof),p=null,d=0,g=0,c='',t=[];
+ if(prof)p=a.filter(function(q){return q.v&&q.v.r_prof===prof})[0]||a.filter(function(q){return n&&normN(q.name)===n})[0]||null;
+ if(p){d=+p.v.d1||0;g=+p.v.d2||0;c=p.v.d3}
+ else{g=bytes>0?Math.round(bytes/1e8)/10:0;var m=/(\d+(?:\.\d+)?)/.exec(prof||'');c=m?m[1]:'';var pr=MP.filter(function(q){return q.name===prof})[0];d=stDays(pr&&pr['session-timeout'])}
+ if(d)t.push(d+'d');if(g)t.push(g+' GiB');if(c){var nn=Number(c);t.push((isFinite(nn)?nn.toFixed(2):c)+' L.E')}
+ return t.join(' \u2022 ')}
 $('ff').addEventListener('change',function(e){
  var f=e.target.files&&e.target.files[0];if(!f)return;
  var rd=new FileReader();rd.onload=function(){
@@ -650,7 +660,7 @@ $('ff').addEventListener('change',function(e){
 });
 try{var sv=localStorage.getItem('bs_font');if(sv){var bs=atob(sv),ab=new Uint8Array(bs.length);for(var j=0;j<bs.length;j++)ab[j]=bs.charCodeAt(j);var f2=new FontFace('UserFont',ab.buffer);f2.load().then(function(){document.fonts.add(f2);FB=sv;$('ffmsg').textContent='The font was saved from last time and is loaded.';render()}).catch(function(){})}}catch(e){}
 var BG='';
-function fill(t,x,url,cw,ch){var M={username:esc(x[0]),password:esc(x[1]),qr:qrsvg(url),name:esc($('name').value),info:esc($('inf').value),host:esc($('host').value),label:esc($('lbl').value),color:$('col').value,cw:cw.toFixed(1),ch:ch.toFixed(1),url:esc(url)};return t.replace(/\{\{(\w+)\}\}/g,function(a,k){return k in M?M[k]:a})}
+function fill(t,x,url,cw,ch){var M={username:esc(x[0]),password:esc(x[1]),qr:qrsvg(url),name:esc($('name').value),info:esc(INFO(x)),host:esc($('host').value),label:esc($('lbl').value),color:$('col').value,cw:cw.toFixed(1),ch:ch.toFixed(1),url:esc(url)};return t.replace(/\{\{(\w+)\}\}/g,function(a,k){return k in M?M[k]:a})}
 function custom(x,url,cw,ch){
  var m=$('mode').value,s='<div class="vc cu" style="width:100%;height:100%;display:block;position:relative;border:0;font-size:'+cw/13+'mm;--c:'+$('col').value+'">';
  if(m=='img'){
@@ -719,7 +729,7 @@ function render(){syncInf();
   html+='<div class="page" style="width:'+W+'mm;height:'+(p==pages-1?lastH:H)+'mm;padding:'+m+'mm"><div class="grid" style="grid-template-columns:repeat('+c+','+cw+'mm);grid-auto-rows:'+ch+'mm;gap:'+g+'mm">';
   list.slice(p*per,(p+1)*per).forEach(function(x){
    var url=qrUrl(host,x),pwm=hasPw(x);if($('mode').value!='def'){html+=custom(x,url,cw,ch);return}
-   html+='<div class="vc" style="--c:'+col+';'+(pwm?varsP:vars)+'"><div class="vh"><span style="font-size:.75em;margin-right:.15em">&#9733;</span>'+esc($('name').value)+'<span style="font-size:.75em;margin-left:.15em">&#9733;</span></div><div class="vm"><div class="vk">'+(pwm?'<small>Username</small><b>'+esc(x[0])+'</b><small>Password</small><b>'+esc(x[1])+'</b>':'<small>'+esc($('lbl').value)+'</small><b>'+esc(x[0])+'</b>')+'</div>'+($('qr').checked?'<div class="vq">'+qrsvg(url)+(side?'<small>Scan to login</small>':'')+'</div>':'')+'</div><div class="vi"><span>'+esc($('inf').value)+'</span></div><div class="vl">Login: http://'+esc(host)+'</div></div>';
+   html+='<div class="vc" style="--c:'+col+';'+(pwm?varsP:vars)+'"><div class="vh"><span style="font-size:.75em;margin-right:.15em">&#9733;</span>'+esc($('name').value)+'<span style="font-size:.75em;margin-left:.15em">&#9733;</span></div><div class="vm"><div class="vk">'+(pwm?'<small>Username</small><b>'+esc(x[0])+'</b><small>Password</small><b>'+esc(x[1])+'</b>':'<small>'+esc($('lbl').value)+'</small><b>'+esc(x[0])+'</b>')+'</div>'+($('qr').checked?'<div class="vq">'+qrsvg(url)+(side?'<small>Scan to login</small>':'')+'</div>':'')+'</div><div class="vi"><span>'+esc(INFO(x))+'</span></div><div class="vl">Login: http://'+esc(host)+'</div></div>';
   });
   html+='</div></div>';
  }
@@ -791,6 +801,7 @@ $('csvx').onclick=function(){var l=parse();if(!l.length){$('msg').textContent='N
  saveFile(new Blob([t],{type:'text/csv;charset=utf-8'}),'bright-star-codes.csv').then(function(){$('msg').textContent='Exported '+l.length+' Code.'},function(e){$('msg').textContent='Could not save the file.'})};
 
 window.addEventListener('resize',fit);
+['codes','d1','d2','d3','inf'].forEach(function(i){$(i).addEventListener('input',function(){INFOMAP={}})});
 function hex(h){h=h.replace('#','');return[0,2,4].map(function(i){return parseInt(h.substr(i,2),16)})}
 var WMD=null,WMW=256,WMH=228;
 (function(){try{var m=/url\(["']?([^"')]+)["']?\)/.exec(getComputedStyle(document.documentElement).getPropertyValue('--logo'));if(!m)return;var im=new Image();im.onload=function(){try{var cv=document.createElement('canvas');cv.width=WMW=im.naturalWidth;cv.height=WMH=im.naturalHeight;cv.getContext('2d').drawImage(im,0,0);WMD=cv.toDataURL('image/png')}catch(e){WMD=m[1]}};im.src=m[1]}catch(e){}})();
@@ -828,7 +839,7 @@ function makePdf(){
   // info pill + footer
   var iy=cy0+ch-ih-lh;
   doc.setFillColor(rgb[0],rgb[1],rgb[2]);doc.roundedRect(cx0+(cw-pw)/2,iy+ih*.2,pw,ih*.6,1.4,1.4,'F');
-  sf(1);doc.setTextColor(255,255,255);ft($('inf').value,cx0+cw/2,iy+ih/2,pw*.94,ih*.6*.6);
+  sf(1);doc.setTextColor(255,255,255);ft(INFO(x),cx0+cw/2,iy+ih/2,pw*.94,ih*.6*.6);
   grad(cx0,iy+ih,cw,lh);
   doc.setTextColor(255,255,255);ft('Login: http://'+host,cx0+cw/2,iy+ih+lh/2,cw*.94,lh*.6);
   if(side){bx=cx0+(cw-bw-gp-qs)/2;by=pwm?my+mh/2-fh/2+lb/2:my+mh/2-bh/2+mh*.07;qx=bx+bw+gp;qy=my+(mh-qs)/2}
@@ -876,10 +887,10 @@ $('pr').onclick=async function(){
  var msg=$('msg');$('shr').hidden=true;var FN=pdfName();PRN='';
  if(!window.jspdf){msg.textContent='The library PDF did not load. Open the app once while online and refresh the page.';return}
  if(!parse().length){msg.textContent='Add codes first.';return}
- if(/[^\x00-\xff\u2022]/.test(($('mode').value=='def'?$('name').value+$('inf').value+$('lbl').value+$('host').value:''))){msg.textContent='The PDF supports only English letters and numbers in these texts. Remove Arabic letters.';return}
+ if(/[^\x00-\xff\u2022]/.test(($('mode').value=='def'?$('name').value+$('inf').value+Object.keys(INFOMAP).map(function(k){return INFOMAP[k]}).join('')+$('lbl').value+$('host').value:''))){msg.textContent='The PDF supports only English letters and numbers in these texts. Remove Arabic letters.';return}
  msg.textContent='Preparing...';
  try{
-  var blob=$('mode').value=='html'?await pdfHtml():makePdf();LB=blob;LN=FN;var where=await dlBlob(blob,FN);
+  var blob=$('mode').value=='html'?await pdfHtml():makePdf();INFOMAP={};render();LB=blob;LN=FN;var where=await dlBlob(blob,FN);
   msg.textContent=(where==='downloads'?'Saved in Downloads/BrightStar. ':where==='docs'?'Saved in Documents/BrightStar. ':'')+'File is ready. Open it and print at Scale 100%.';
   try{var f=new File([blob],FN,{type:'application/pdf'});if(!isNative()&&navigator.canShare&&navigator.canShare({files:[f]}))$('shr').hidden=false}catch(e){}
  }catch(e){msg.textContent='Problem while saving: '+((e&&e.message)||e)}
@@ -1149,7 +1160,7 @@ $('m_more').onclick=function(){MSHOW+=60;mRender()};
 function mExport(l,pf){
  if(!l.length){$('m_msg').textContent='No cards to export.';return}
  if(!pf)pf=l[0].profile||'';
- if(pf){var pr=pget().filter(function(p){return p.v&&p.v.r_prof===pf})[0];if(pr)['d1','d2','d3'].forEach(function(i){var el=$(i);el.value=pr.v[i];el.dispatchEvent(new Event('input',{bubbles:true}))})}
+ INFOMAP={};l.forEach(function(x){INFOMAP[x.name]=planInfo(x.profile||'',+x['limit-bytes-total']||0)});
  $('codes').value=l.map(function(x){return x.name}).join('\n');render();
  PRN=pf||'';$('pr').click()}
 $('m_pdf').onclick=function(){mExport(mFiltered(),$('m_prof').value)};
